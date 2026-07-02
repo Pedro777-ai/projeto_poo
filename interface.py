@@ -1,7 +1,7 @@
 # Parte visual 
 
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from biblioteca import Biblioteca
 from livro import Livro
 
@@ -62,9 +62,8 @@ class Interface:
         ttk.Label(self.aba_livros, text="Quantidade:").grid(row=5, column=0, padx=10, pady=10)
         self.entry_quantidade = ttk.Entry(self.aba_livros, width=40)
         self.entry_quantidade.grid(row=5, column=1)
-
-
-
+        
+        
         ttk.Button(self.aba_livros, text="Cadastrar Livro", command=self.cadastrar_livro).grid(row=6, column=1, pady=20)
 
 
@@ -77,6 +76,36 @@ class Interface:
         categoria = self.combo_categoria.get()
         ano = self.entry_ano.get()
         quantidade = self.entry_quantidade.get()
+        if not titulo:
+            messagebox.showerror(
+            "Erro",
+            "O título é obrigatório."
+        )
+            return
+        if not autor:
+            messagebox.showerror(
+            "Erro",
+            "O autor é obrigatório."
+        )
+            return
+        if not editora:
+            messagebox.showerror(
+            "Erro",
+            "A editora é obrigatório."
+        )
+            return
+        if not ano:
+            messagebox.showerror(
+            "Erro",
+            "O ano é obrigatório."
+        )
+            return
+        if not quantidade:
+            messagebox.showerror(
+            "Erro",
+            "A quantidade é obrigatório."
+        )
+            return
         livro = Livro(
             titulo,
             autor,
@@ -87,7 +116,6 @@ class Interface:
         )
         self.biblioteca.adicionar_livro(livro)
         
-
         print(f"Livro cadastrado: {livro}")
 
         self.entry_titulo.delete(0, tk.END)
@@ -96,3 +124,5 @@ class Interface:
         self.entry_ano.delete(0, tk.END)
         self.entry_quantidade.delete(0, tk.END)
         
+
+    
