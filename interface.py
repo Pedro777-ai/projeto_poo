@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from biblioteca import Biblioteca
 from livro import Livro
+from aluno import Aluno
 
 class Interface:
     def __init__(self):
@@ -55,6 +56,7 @@ class Interface:
         self.combo_categoria.grid(row=3, column=1)
         self.combo_categoria.current(0)
 
+        #Livro
         ttk.Label(self.aba_livros, text="Ano:").grid(row=4, column=0, padx=10, pady=10)
         self.entry_ano = ttk.Entry(self.aba_livros, width=40)
         self.entry_ano.grid(row=4, column=1)
@@ -65,6 +67,22 @@ class Interface:
         
         
         ttk.Button(self.aba_livros, text="Cadastrar Livro", command=self.cadastrar_livro).grid(row=6, column=1, pady=20)
+
+        #Aluno
+        ttk.Label(self.aba_alunos, text="Nome Completo: ").grid(row=0, column=0, padx=10, pady=10)
+        self.entry_nome = ttk.Entry(self.aba_alunos, width=40)
+        self.entry_nome.grid(row=0, column=1)
+
+        ttk.Label(self.aba_alunos, text="Matrícula: ").grid(row=1, column=0, padx=10, pady=10)
+        self.entry_matricula = ttk.Entry(self.aba_alunos, width=40)
+        self.entry_matricula.grid(row=1, column=1)
+
+        ttk.Label(self.aba_alunos, text="Email Escolar:").grid(row=2, column=0, padx=10, pady=10)
+        self.entry_email = ttk.Entry(self.aba_alunos, width=40)
+        self.entry_email.grid(row=2, column=1)
+
+        ttk.Button(self.aba_alunos, text="Cadastrar Aluno", command=self.cadastrar_aluno).grid(row=6, column=1, pady=20)
+        
 
 
         self.janela.mainloop()
@@ -123,6 +141,41 @@ class Interface:
         self.entry_editora.delete(0, tk.END)
         self.entry_ano.delete(0, tk.END)
         self.entry_quantidade.delete(0, tk.END)
+
+    def cadastrar_aluno(self):
+        nome = self.entry_nome.get()
+        matricula = self.entry_matricula.get()
+        email = self.entry_email.get()
+        if not nome:
+            messagebox.showerror(
+            "Erro",
+            "O nome é obrigatório."
+        )
+            return
+        if not matricula:
+            messagebox.showerror(
+            "Erro",
+            "A matricula é obrigatória."
+        )
+            return
+        if not email:
+            messagebox.showerror(
+            "Erro",
+            "O email é obrigatório."
+        )
+            return
+        aluno = Aluno(
+            nome,
+            matricula,
+            email
+        )
+        self.biblioteca.adicionar_aluno(aluno)
+        
+        print(f"Aluno cadastrado: {aluno}")
+
+        self.entry_nome.delete(0, tk.END)
+        self.entry_matricula.delete(0, tk.END)
+        self.entry_email.delete(0, tk.END)
         
 
     
