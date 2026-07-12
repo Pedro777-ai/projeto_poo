@@ -32,10 +32,6 @@ class Interface:
         self.entry_autor = ttk.Entry(self.aba_livros, width=40)
         self.entry_autor.grid(row=1, column=1)
 
-<<<<<<< HEAD
-        ttk.Button(self.aba_livros, text="Cadastrar", command=self.cadastrar_livro).grid(row=2, column=1, pady=15)
-        
-=======
         ttk.Label(self.aba_livros, text="Editora:").grid(row=2, column=0, padx=10, pady=10)
         self.entry_editora = ttk.Entry(self.aba_livros, width=40)
         self.entry_editora.grid(row=2, column=1)
@@ -88,7 +84,6 @@ class Interface:
         ttk.Button(self.aba_alunos, text="Cadastrar Aluno", command=self.cadastrar_aluno).grid(row=6, column=1, pady=20)
         
 
->>>>>>> c8634010301623078932f237688513ad3300dd96
 
         self.janela.mainloop()
 
