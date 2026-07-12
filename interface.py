@@ -32,7 +32,7 @@ class Interface:
         self.entry_autor.grid(row=1, column=1)
 
         ttk.Button(self.aba_livros, text="Cadastrar", command=self.cadastrar_livro).grid(row=2, column=1, pady=15)
-
+        
 
         self.janela.mainloop()
 
