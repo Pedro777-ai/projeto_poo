@@ -1,12 +1,14 @@
-# Controla os livros e alunos
+# Controla os livros, alunos e empréstimos
 import json
 from livro import Livro
 from aluno import Aluno
+from emprestimo import Emprestimo
 
 class Biblioteca:
     def __init__(self):
         self.livros = []
         self.alunos = []
+        self.emprestimos = []
 
         self.carregar_livros()
         self.carregar_alunos()
@@ -53,10 +55,10 @@ class Biblioteca:
                       item["editora"],
                       item["categoria"],
                       item["ano"],
-                      item["quantidade"]
+                      int(item["quantidade"])
                     )
 
-                    livro.disponiveis = item["disponiveis"]
+                    livro.disponiveis = int(item["disponiveis"])
 
                     self.livros.append(livro)
 
@@ -76,8 +78,15 @@ class Biblioteca:
         return False
 
     def adicionar_aluno(self, aluno):
+        for aluno_existente in self.alunos:
+            if aluno_existente.matricula == aluno.matricula:
+                return False
+
+
         self.alunos.append(aluno)
         self.salvar_alunos()
+
+        return True
     
     def salvar_alunos(self):
         dados = []
@@ -120,5 +129,28 @@ class Biblioteca:
                 self.alunos.remove(aluno)
                 self.salvar_alunos()
                 return True
+
+        return False
+    
+
+    def realizar_emprestimo(self, aluno, livro):
+
+        if livro.disponiveis > 0:
+
+            livro.emprestar()
+
+            emprestimo = Emprestimo(
+                aluno,
+                livro
+            )
+
+            self.emprestimos.append(
+                emprestimo
+            )
+
+            self.salvar_livros()
+
+            return True
+
 
         return False

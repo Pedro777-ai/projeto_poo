@@ -180,7 +180,98 @@ class Interface:
 
         self.atualizar_tabela_alunos()
 
+        #================
+        #  EMPRÉSTIMOS
+        #================
+        
+        ttk.Label(
+            self.aba_emprestimos,
+            text="Aluno:"
+        ).grid(row=0, column=0, padx=10, pady=10)
 
+
+        self.combo_alunos = ttk.Combobox(
+            self.aba_emprestimos,
+            width=40,
+            state="readonly"
+        )
+
+        self.combo_alunos.grid(
+            row=0,
+            column=1,
+            padx=10,
+            pady=10
+        )
+
+
+        ttk.Label(
+            self.aba_emprestimos,
+            text="Livro:"
+        ).grid(row=1, column=0, padx=10, pady=10)
+
+
+        self.combo_livros = ttk.Combobox(
+            self.aba_emprestimos,
+            width=40,
+            state="readonly"
+        )
+
+        self.combo_livros.grid(
+            row=1,
+            column=1,
+            padx=10,
+            pady=10
+        )
+
+
+        ttk.Button(
+            self.aba_emprestimos,
+            text="Realizar Empréstimo",
+            command=self.realizar_emprestimo
+        ).grid(
+            row=2,
+            column=1,
+            pady=20
+        )
+
+        colunas_emprestimo = (
+            "Aluno",
+            "Livro",
+            "Status"
+        )
+
+
+        self.tabela_emprestimos = ttk.Treeview(
+            self.aba_emprestimos,
+            columns=colunas_emprestimo,
+            show="headings",
+            height=12
+        )
+
+
+        for coluna in colunas_emprestimo:
+            self.tabela_emprestimos.heading(
+                coluna,
+                text=coluna
+            )
+
+            self.tabela_emprestimos.column(
+                coluna,
+                width=250
+            )
+
+
+        self.tabela_emprestimos.grid(
+            row=4,
+            column=0,
+            columnspan=2,
+            padx=10,
+            pady=20
+        )
+
+        self.atualizar_combos_emprestimo()
+
+        
         self.janela.mainloop()
             #===============
             #   LIVRO
@@ -191,7 +282,15 @@ class Interface:
         editora = self.entry_editora.get()
         categoria = self.combo_categoria.get()
         ano = self.entry_ano.get()
-        quantidade = self.entry_quantidade.get()
+        try:
+            quantidade = int(self.entry_quantidade.get())
+
+        except ValueError:
+            messagebox.showerror(
+                "Erro",
+                "A quantidade deve ser um número."
+            )
+            return
         if not titulo:
             messagebox.showerror(
             "Erro",
@@ -432,13 +531,27 @@ class Interface:
             matricula,
             email
         )
-        self.biblioteca.adicionar_aluno(aluno)
-        self.atualizar_tabela_alunos()
+        
+        if self.biblioteca.adicionar_aluno(aluno):
+            self.atualizar_tabela_alunos()
+
+            messagebox.showinfo(
+                "Sucesso",
+                "Aluno cadastrado com sucesso!"
+            )
+
+            self.entry_nome.delete(0, tk.END)
+            self.entry_matricula.delete(0, tk.END)
+            self.entry_email.delete(0, tk.END)
+
+        else:
+            messagebox.showerror(
+                "Erro",
+                "Este aluno já está cadastrado."
+            )
         print(f"Aluno cadastrado: {aluno}")
 
-        self.entry_nome.delete(0, tk.END)
-        self.entry_matricula.delete(0, tk.END)
-        self.entry_email.delete(0, tk.END)
+        
 
     def atualizar_tabela_alunos(self):
 
@@ -542,6 +655,7 @@ class Interface:
 
 
         self.atualizar_tabela_alunos()
+        self.atualizar_combos_emprestimo()
 
 
         self.entry_nome.delete(0, tk.END)
@@ -556,3 +670,94 @@ class Interface:
             "Sucesso",
             "Aluno excluído com sucesso!"
         )    
+
+        #================
+        #  EMPRÉSTIMOS
+        #================
+
+    def atualizar_combos_emprestimo(self):
+        alunos = []
+
+        for aluno in self.biblioteca.alunos:
+            alunos.append(
+                aluno.nome
+            )
+        livros = []
+        for livro in self.biblioteca.livros:
+            if livro.disponiveis > 0:
+                livros.append(
+                    livro.titulo
+                )
+        self.combo_alunos["values"] = alunos
+        self.combo_livros["values"] = livros
+
+    def realizar_emprestimo(self):
+        aluno_nome = self.combo_alunos.get()
+        livro_titulo = self.combo_livros.get()
+
+        if not aluno_nome:
+            messagebox.showerror(
+                "Erro",
+                "Selecione um aluno."
+            )
+            return
+
+        if not livro_titulo:
+            messagebox.showerror(
+                "Erro",
+                "Selecione um livro."
+            )
+            return
+
+        aluno = None
+        livro = None
+
+        for a in self.biblioteca.alunos:
+            if a.nome == aluno_nome:
+                aluno = a
+                break
+
+        for l in self.biblioteca.livros:
+            if l.titulo == livro_titulo:
+                livro = l
+                break
+
+        if aluno and livro:
+            sucesso = self.biblioteca.realizar_emprestimo(
+                aluno,
+                livro
+            )
+
+            if sucesso:
+                messagebox.showinfo(
+                    "Sucesso",
+                    "Empréstimo realizado!"
+                )
+
+                self.atualizar_tabela_livros()
+                self.atualizar_combos_emprestimo()
+                self.atualizar_tabela_emprestimos()
+
+            else:
+                messagebox.showerror(
+                    "Erro",
+                    "Livro indisponível."
+                )
+
+    def atualizar_tabela_emprestimos(self):
+
+        for item in self.tabela_emprestimos.get_children():
+            self.tabela_emprestimos.delete(item)
+
+        for emprestimo in self.biblioteca.emprestimos:
+
+            self.tabela_emprestimos.insert(
+                "",
+                tk.END,
+                values=(
+                    emprestimo.aluno.nome,
+                    emprestimo.livro.titulo,
+                    emprestimo.status
+                )
+            )
+        

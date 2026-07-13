@@ -6,6 +6,15 @@
         "categoria": "Romance",
         "ano": "1900",
         "quantidade": 5,
-        "disponiveis": "5"
+        "disponiveis": 4
+    },
+    {
+        "titulo": "pequeno cisne",
+        "autor": "pedsro",
+        "editora": "brsuca",
+        "categoria": "Ficção",
+        "ano": "2026",
+        "quantidade": 4,
+        "disponiveis": 0
     }
 ]
