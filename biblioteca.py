@@ -78,6 +78,7 @@ class Biblioteca:
     def adicionar_aluno(self, aluno):
         self.alunos.append(aluno)
         self.salvar_alunos()
+    
     def salvar_alunos(self):
         dados = []
 
@@ -106,7 +107,18 @@ class Biblioteca:
 
                     self.alunos.append(aluno)
 
-                
-
         except FileNotFoundError:
             pass
+
+    def editar_aluno(self, aluno):
+        self.salvar_alunos()
+
+    def excluir_aluno(self, matricula):
+
+        for aluno in self.alunos:
+            if aluno.matricula == matricula:
+                self.alunos.remove(aluno)
+                self.salvar_alunos()
+                return True
+
+        return False

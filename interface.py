@@ -13,6 +13,7 @@ class Interface:
         self.janela.geometry("1300x700")
         self.biblioteca = Biblioteca()
         self.livro_selecionado = None
+        self.aluno_selecionado = None
 
         self.notebook = ttk.Notebook(self.janela)
         self.notebook.pack(fill="both", expand=True)
@@ -57,7 +58,10 @@ class Interface:
         self.combo_categoria.grid(row=3, column=1)
         self.combo_categoria.current(0)
 
-        #Livro
+            #===============
+            #   LIVRO
+            #===============
+
         ttk.Label(self.aba_livros, text="Ano:").grid(row=4, column=0, padx=10, pady=10)
         self.entry_ano = ttk.Entry(self.aba_livros, width=40)
         self.entry_ano.grid(row=4, column=1)
@@ -68,6 +72,18 @@ class Interface:
         
         
         ttk.Button(self.aba_livros, text="Cadastrar Livro", command=self.cadastrar_livro).grid(row=6, column=1, pady=20)
+
+        ttk.Label(self.aba_livros, text="Pesquisar:").grid(row=7, column=0, padx=10)
+
+        self.entry_pesquisa = ttk.Entry(self.aba_livros, width=40)
+        self.entry_pesquisa.grid(row=7, column=1, sticky="w")
+
+        ttk.Button(
+            self.aba_livros,
+            text="Pesquisar",
+            command=self.pesquisar_livro
+        ).grid(row=7, column=2, padx=10)
+
 
         colunas = ("Título", "Autor", "Editora", "Categoria", "Ano", "Quantidade", "Disponíveis")
 
@@ -83,9 +99,9 @@ class Interface:
             self.tabela_livros.column(coluna, width=180)
 
         self.tabela_livros.grid(
-            row=7,
+            row=8,
             column=0,
-            columnspan=2,
+            columnspan=3,
             padx=10,
             pady=20
         )
@@ -94,21 +110,22 @@ class Interface:
             self.aba_livros,
             text="Editar",
             command=self.editar_livro
-        ).grid(row=8, column=0, pady=10)
+        ).grid(row=9, column=0, pady=10)
 
         ttk.Button(
             self.aba_livros,
             text="Excluir",
             command=self.excluir_livro
-        ).grid(row=8, column=1, pady=10)
+        ).grid(row=9, column=1, pady=10)
 
         self.tabela_livros.bind(
             "<<TreeviewSelect>>",
             self.selecionar_livro)
 
+            #================
+            #      ALUNO
+            #================
 
-
-        #Aluno
         ttk.Label(self.aba_alunos, text="Nome Completo: ").grid(row=0, column=0, padx=10, pady=10)
         self.entry_nome = ttk.Entry(self.aba_alunos, width=40)
         self.entry_nome.grid(row=0, column=1)
@@ -123,10 +140,51 @@ class Interface:
 
         ttk.Button(self.aba_alunos, text="Cadastrar Aluno", command=self.cadastrar_aluno).grid(row=6, column=1, pady=20)
         self.atualizar_tabela_livros()
+       
+        ttk.Button(
+            self.aba_alunos,
+            text="Editar",
+            command=self.editar_aluno
+        ).grid(row=6, column=0, pady=20)
+
+
+        ttk.Button(
+            self.aba_alunos,
+            text="Excluir",
+            command=self.excluir_aluno
+        ).grid(row=6, column=2, pady=20)
+        
+        colunas = ("Nome", "Matrícula", "Email")
+
+        self.tabela_alunos = ttk.Treeview(
+            self.aba_alunos,
+            columns=colunas,
+            show="headings",
+            height=10
+        )
+
+        for coluna in colunas:
+            self.tabela_alunos.heading(coluna, text=coluna)
+            self.tabela_alunos.column(coluna, width=250)
+
+        self.tabela_alunos.grid(
+            row=7,
+            column=0,
+            columnspan=2,
+            padx=10,
+            pady=20
+        )
+        self.tabela_alunos.bind(
+        "<<TreeviewSelect>>",
+        self.selecionar_aluno)
+
+        self.atualizar_tabela_alunos()
 
 
         self.janela.mainloop()
-
+            #===============
+            #   LIVRO
+            #===============
     def cadastrar_livro(self):
         titulo = self.entry_titulo.get()
         autor = self.entry_autor.get()
@@ -194,40 +252,6 @@ class Interface:
         
         print(f"Livro cadastrado: {livro}")
 
-    def cadastrar_aluno(self):
-        nome = self.entry_nome.get()
-        matricula = self.entry_matricula.get()
-        email = self.entry_email.get()
-        if not nome:
-            messagebox.showerror(
-            "Erro",
-            "O nome é obrigatório."
-        )
-            return
-        if not matricula:
-            messagebox.showerror(
-            "Erro",
-            "A matricula é obrigatória."
-        )
-            return
-        if not email:
-            messagebox.showerror(
-            "Erro",
-            "O email é obrigatório."
-        )
-            return
-        aluno = Aluno(
-            nome,
-            matricula,
-            email
-        )
-        self.biblioteca.adicionar_aluno(aluno)
-        
-        print(f"Aluno cadastrado: {aluno}")
-
-        self.entry_nome.delete(0, tk.END)
-        self.entry_matricula.delete(0, tk.END)
-        self.entry_email.delete(0, tk.END)
         
     def atualizar_tabela_livros(self):
         
@@ -348,3 +372,187 @@ class Interface:
             "Sucesso",
             "Livro excluído com sucesso."
         )
+    
+    def pesquisar_livro(self):
+        texto = self.entry_pesquisa.get().lower().strip()
+
+        if texto == "":
+            self.atualizar_tabela_livros()
+            return  
+        
+        for item in self.tabela_livros.get_children():
+            self.tabela_livros.delete(item)
+
+        for livro in self.biblioteca.livros:
+            if (
+                texto in livro.titulo.lower()
+                or texto in livro.autor.lower()
+                or texto in livro.categoria.lower()
+            ):
+                self.tabela_livros.insert(
+                    "",
+                    tk.END,
+                    values=(
+                        livro.titulo,
+                        livro.autor,
+                        livro.editora,
+                        livro.categoria,
+                        livro.ano,
+                        livro.quantidade,
+                        livro.disponiveis
+                    )
+                )
+            #================
+            #      ALUNO
+            #================
+    def cadastrar_aluno(self):
+        nome = self.entry_nome.get()
+        matricula = self.entry_matricula.get()
+        email = self.entry_email.get()
+        if not nome:
+            messagebox.showerror(
+            "Erro",
+            "O nome é obrigatório."
+        )
+            return
+        if not matricula:
+            messagebox.showerror(
+            "Erro",
+            "A matricula é obrigatória."
+        )
+            return
+        if not email:
+            messagebox.showerror(
+            "Erro",
+            "O email é obrigatório."
+        )
+            return
+        aluno = Aluno(
+            nome,
+            matricula,
+            email
+        )
+        self.biblioteca.adicionar_aluno(aluno)
+        self.atualizar_tabela_alunos()
+        print(f"Aluno cadastrado: {aluno}")
+
+        self.entry_nome.delete(0, tk.END)
+        self.entry_matricula.delete(0, tk.END)
+        self.entry_email.delete(0, tk.END)
+
+    def atualizar_tabela_alunos(self):
+
+        for item in self.tabela_alunos.get_children():
+            self.tabela_alunos.delete(item)
+
+        for aluno in self.biblioteca.alunos:
+            self.tabela_alunos.insert(
+                "",
+                tk.END,
+                values=(
+                    aluno.nome,
+                    aluno.matricula,
+                    aluno.email
+                )
+            )
+    def selecionar_aluno(self, event):
+
+        selecionado = self.tabela_alunos.selection()
+
+        if not selecionado:
+            return
+
+        valores = self.tabela_alunos.item(
+            selecionado[0],
+            "values"
+        )
+
+        nome = valores[0]
+        matricula = valores[1]
+
+        for aluno in self.biblioteca.alunos:
+            if (
+                aluno.nome == nome
+                and aluno.matricula == matricula
+            ):
+                self.aluno_selecionado = aluno
+                break
+
+
+        self.entry_nome.delete(0, tk.END)
+        self.entry_nome.insert(0, valores[0])
+
+        self.entry_matricula.delete(0, tk.END)
+        self.entry_matricula.insert(0, valores[1])
+
+        self.entry_email.delete(0, tk.END)
+        self.entry_email.insert(0, valores[2])
+
+    def editar_aluno(self):
+
+        if self.aluno_selecionado is None:
+            messagebox.showwarning(
+                "Aviso",
+                "Selecione um aluno."
+            )
+            return
+
+
+        self.aluno_selecionado.nome = self.entry_nome.get()
+        self.aluno_selecionado.matricula = self.entry_matricula.get()
+        self.aluno_selecionado.email = self.entry_email.get()
+
+
+        self.biblioteca.editar_aluno(
+            self.aluno_selecionado
+        )
+
+
+        self.atualizar_tabela_alunos()
+
+
+        messagebox.showinfo(
+            "Sucesso",
+            "Aluno atualizado com sucesso!"
+        )
+
+    def excluir_aluno(self):
+
+        if self.aluno_selecionado is None:
+            messagebox.showwarning(
+                "Aviso",
+                "Selecione um aluno."
+            )
+            return
+
+
+        resposta = messagebox.askyesno(
+            "Confirmação",
+            f"Deseja excluir {self.aluno_selecionado.nome}?"
+        )
+
+
+        if not resposta:
+            return
+
+
+        self.biblioteca.excluir_aluno(
+            self.aluno_selecionado.matricula
+        )
+
+
+        self.atualizar_tabela_alunos()
+
+
+        self.entry_nome.delete(0, tk.END)
+        self.entry_matricula.delete(0, tk.END)
+        self.entry_email.delete(0, tk.END)
+
+
+        self.aluno_selecionado = None
+
+
+        messagebox.showinfo(
+            "Sucesso",
+            "Aluno excluído com sucesso!"
+        )    
