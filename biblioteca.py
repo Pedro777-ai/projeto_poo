@@ -12,18 +12,22 @@ class Biblioteca:
 
         self.carregar_livros()
         self.carregar_alunos()
+        self.carregar_emprestimos()
 
     def adicionar_livro(self, livro):
-       for livro_existente in self.livros:
+
+        for livro_existente in self.livros:
             if (
                 livro_existente.titulo.lower() == livro.titulo.lower()
                 and
                 livro_existente.autor.lower() == livro.autor.lower()
             ):
                 return False
-            self.livros.append(livro)
-            self.salvar_livros()
-            return True
+
+        self.livros.append(livro)
+        self.salvar_livros()
+
+        return True 
         
     def salvar_livros(self):
         dados = []
@@ -149,8 +153,75 @@ class Biblioteca:
             )
 
             self.salvar_livros()
-
+            self.salvar_emprestimos()
             return True
 
-
         return False
+    
+    def devolver_emprestimo(self, emprestimo):
+
+        if emprestimo.status == "Devolvido":
+            return False
+
+        emprestimo.devolver()
+        emprestimo.livro.devolver()
+
+        self.salvar_livros()
+        self.salvar_emprestimos()
+
+        return True
+    
+    def salvar_emprestimos(self):
+        dados = []
+
+        for emprestimo in self.emprestimos:
+            dados.append({
+                "aluno": emprestimo.aluno.matricula,
+                "livro": emprestimo.livro.titulo,
+                "status": emprestimo.status
+            })
+        with open(
+            "dados/emprestimos.json",
+            "w",
+            encoding="utf-8"
+        ) as arquivo:
+            json.dump(
+                dados,
+                arquivo,
+                ensure_ascii=False,
+                indent=4
+            )
+
+    def carregar_emprestimos(self):
+        try:
+            with open(
+                "dados/emprestimos.json",
+                "r",
+                encoding="utf-8"
+            ) as arquivo:
+                
+                dados = json.load(arquivo)
+
+                for item in dados:
+                    aluno = None
+                    livro = None
+
+                    for a in self.alunos:
+                        if a.matricula == item["aluno"]:
+                            aluno = a
+
+                    for l in self.livros:
+                        if l.titulo == item["livro"]:
+                            livro = l
+
+                    if aluno and livro:
+                        emprestimo = Emprestimo(
+                            aluno,
+                            livro
+                        )
+                        emprestimo.status = item["status"]
+                        self.emprestimos.append(
+                            emprestimo
+                        )
+        except FileNotFoundError:
+            pass

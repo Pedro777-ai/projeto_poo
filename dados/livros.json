@@ -6,7 +6,7 @@
         "categoria": "Romance",
         "ano": "1900",
         "quantidade": 5,
-        "disponiveis": 4
+        "disponiveis": 0
     },
     {
         "titulo": "pequeno cisne",
@@ -14,7 +14,16 @@
         "editora": "brsuca",
         "categoria": "Ficção",
         "ano": "2026",
-        "quantidade": 4,
+        "quantidade": 5,
         "disponiveis": 0
+    },
+    {
+        "titulo": "turma da monica",
+        "autor": "asda",
+        "editora": "ewef",
+        "categoria": "Ficção",
+        "ano": "1232",
+        "quantidade": 6,
+        "disponiveis": 1
     }
 ]
