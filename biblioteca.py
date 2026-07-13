@@ -9,10 +9,19 @@ class Biblioteca:
         self.alunos = []
 
         self.carregar_livros()
+        self.carregar_alunos()
 
     def adicionar_livro(self, livro):
-        self.livros.append(livro)
-        self.salvar_livros()
+       for livro_existente in self.livros:
+            if (
+                livro_existente.titulo.lower() == livro.titulo.lower()
+                and
+                livro_existente.autor.lower() == livro.autor.lower()
+            ):
+                return False
+            self.livros.append(livro)
+            self.salvar_livros()
+            return True
         
     def salvar_livros(self):
         dados = []
@@ -53,6 +62,18 @@ class Biblioteca:
 
         except FileNotFoundError:
             pass
+
+    def editar_livro(self, livro):
+        self.salvar_livros()
+
+    def excluir_livro(self, titulo, autor):
+        for livro in self.livros:
+            if livro.titulo == titulo and livro.autor == autor:
+                self.livros.remove(livro)
+                self.salvar_livros()
+                return True
+
+        return False
 
     def adicionar_aluno(self, aluno):
         self.alunos.append(aluno)

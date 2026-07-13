@@ -1,65 +1,11 @@
 [
     {
-        "titulo": "sadas",
-        "autor": "asdasd",
-        "editora": "asd",
-        "categoria": "Romance",
-        "ano": "1902",
-        "quantidade": "5",
-        "disponiveis": "5"
-    },
-    {
-        "titulo": "ads",
-        "autor": "asd",
-        "editora": "asda",
-        "categoria": "Outros",
-        "ano": "sadasda",
-        "quantidade": "sadasdasd",
-        "disponiveis": "sadasdasd"
-    },
-    {
         "titulo": "dom casmurro",
         "autor": "machado de assis",
         "editora": "todavia",
         "categoria": "Romance",
         "ano": "1899",
-        "quantidade": "5",
+        "quantidade": 5,
         "disponiveis": "5"
-    },
-    {
-        "titulo": "acxz",
-        "autor": "zcxcxz",
-        "editora": "zcxzc",
-        "categoria": "Romance",
-        "ano": "zxczxc",
-        "quantidade": "czxczxczxcxzczxcxzcccccccccccxcx",
-        "disponiveis": "czxczxczxcxzczxcxzcccccccccccxcx"
-    },
-    {
-        "titulo": "",
-        "autor": "",
-        "editora": "",
-        "categoria": "Romance",
-        "ano": "",
-        "quantidade": "d",
-        "disponiveis": "d"
-    },
-    {
-        "titulo": "adsa",
-        "autor": "asd",
-        "editora": "asda",
-        "categoria": "Romance",
-        "ano": "dasd",
-        "quantidade": "",
-        "disponiveis": ""
-    },
-    {
-        "titulo": "",
-        "autor": "",
-        "editora": "",
-        "categoria": "Romance",
-        "ano": "",
-        "quantidade": "2",
-        "disponiveis": "2"
     }
 ]
