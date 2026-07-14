@@ -5,7 +5,7 @@ from tkinter import ttk, messagebox
 from biblioteca import Biblioteca
 from livro import Livro
 from aluno import Aluno
-from datetime import date
+
 
 class Interface:
     def __init__(self):

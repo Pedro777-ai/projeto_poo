@@ -6,11 +6,7 @@
         "categoria": "Romance",
         "ano": "1900",
         "quantidade": 5,
-<<<<<<< HEAD
         "disponiveis": 5
-=======
-        "disponiveis": 2
->>>>>>> 9b53ca4d1e669003c2c618e194ee2e8e135b0297
     },
     {
         "titulo": "capitães de areia",
@@ -53,11 +49,6 @@
         "autor": "rick riordan",
         "editora": "miramax books",
         "categoria": "Ficção",
-<<<<<<< HEAD
-        "ano": "1232",
-        "quantidade": 6,
-        "disponiveis": 6
-=======
         "ano": "2005",
         "quantidade": 8,
         "disponiveis": 8
@@ -97,6 +88,5 @@
         "ano": "1945",
         "quantidade": 3,
         "disponiveis": 3
->>>>>>> 9b53ca4d1e669003c2c618e194ee2e8e135b0297
     }
 ]
