@@ -6,7 +6,7 @@
         "categoria": "Romance",
         "ano": "1900",
         "quantidade": 5,
-        "disponiveis": 0
+        "disponiveis": 5
     },
     {
         "titulo": "pequeno cisne",
@@ -15,7 +15,7 @@
         "categoria": "Ficção",
         "ano": "2026",
         "quantidade": 5,
-        "disponiveis": 0
+        "disponiveis": 5
     },
     {
         "titulo": "turma da monica",
@@ -24,6 +24,6 @@
         "categoria": "Ficção",
         "ano": "1232",
         "quantidade": 6,
-        "disponiveis": 1
+        "disponiveis": 6
     }
 ]

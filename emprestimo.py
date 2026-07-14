@@ -1,10 +1,19 @@
 # Classe que representa um empréstimo
+from datetime import datetime, timedelta
 
 class Emprestimo:
 
     def __init__(self, aluno, livro):
         self.aluno = aluno
         self.livro = livro
+
+        self.data_emprestimo = datetime.now()
+
+        self.data_devolucao = (
+            self.data_emprestimo +
+            timedelta(days=21)
+        )
+
         self.status = "Ativo"
 
 

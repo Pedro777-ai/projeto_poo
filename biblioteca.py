@@ -3,6 +3,7 @@ import json
 from livro import Livro
 from aluno import Aluno
 from emprestimo import Emprestimo
+from datetime import datetime
 
 class Biblioteca:
     def __init__(self):
@@ -139,6 +140,15 @@ class Biblioteca:
 
     def realizar_emprestimo(self, aluno, livro):
 
+        for emprestimo in self.emprestimos:
+
+            if (
+                emprestimo.aluno.matricula == aluno.matricula
+                and emprestimo.status == "Ativo"
+                
+            ):
+                return False
+
         if livro.disponiveis > 0:
 
             livro.emprestar()
@@ -163,8 +173,9 @@ class Biblioteca:
         if emprestimo.status == "Devolvido":
             return False
 
-        emprestimo.devolver()
         emprestimo.livro.devolver()
+
+        self.emprestimos.remove(emprestimo)
 
         self.salvar_livros()
         self.salvar_emprestimos()
@@ -178,7 +189,9 @@ class Biblioteca:
             dados.append({
                 "aluno": emprestimo.aluno.matricula,
                 "livro": emprestimo.livro.titulo,
-                "status": emprestimo.status
+                "status": emprestimo.status,
+                "data_emprestimo": emprestimo.data_emprestimo.strftime("%d/%m/%Y"),
+                "data_devolucao": emprestimo.data_devolucao.strftime("%d/%m/%Y")
             })
         with open(
             "dados/emprestimos.json",
@@ -219,6 +232,17 @@ class Biblioteca:
                             aluno,
                             livro
                         )
+
+                        emprestimo.data_emprestimo = datetime.strptime(
+                            item["data_emprestimo"],
+                            "%d/%m/%Y"
+                        )
+
+                        emprestimo.data_devolucao = datetime.strptime(
+                            item["data_devolucao"],
+                            "%d/%m/%Y"
+                        )
+
                         emprestimo.status = item["status"]
                         self.emprestimos.append(
                             emprestimo

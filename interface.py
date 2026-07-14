@@ -5,6 +5,7 @@ from tkinter import ttk, messagebox
 from biblioteca import Biblioteca
 from livro import Livro
 from aluno import Aluno
+from datetime import date
 
 class Interface:
     def __init__(self):
@@ -238,6 +239,8 @@ class Interface:
         colunas_emprestimo = (
             "Aluno",
             "Livro",
+            "Empréstimo",
+            "Devolução",
             "Status"
         )
 
@@ -796,7 +799,7 @@ class Interface:
             else:
                 messagebox.showerror(
                     "Erro",
-                    "Livro indisponível."
+                    "O livro está indisponível ou o aluno já realizou um empréstimo hoje."
                 )
 
     def selecionar_emprestimo(self, event):
@@ -839,6 +842,8 @@ class Interface:
                 values=(
                     emprestimo.aluno.nome,
                     emprestimo.livro.titulo,
+                    emprestimo.data_emprestimo.strftime("%d/%m/%Y"),
+                    emprestimo.data_devolucao.strftime("%d/%m/%Y"),
                     emprestimo.status
                 )
             )
