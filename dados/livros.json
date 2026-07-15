@@ -1,29 +1,101 @@
 [
     {
-        "titulo": "sadas",
-        "autor": "asdasd",
-        "editora": "asd",
-        "categoria": "Romance",
-        "ano": "1902",
-        "quantidade": "5",
-        "disponiveis": "5"
-    },
-    {
-        "titulo": "ads",
-        "autor": "asd",
-        "editora": "asda",
-        "categoria": "Outros",
-        "ano": "sadasda",
-        "quantidade": "sadasdasd",
-        "disponiveis": "sadasdasd"
-    },
-    {
         "titulo": "dom casmurro",
         "autor": "machado de assis",
         "editora": "todavia",
         "categoria": "Romance",
-        "ano": "1899",
-        "quantidade": "5",
-        "disponiveis": "5"
+        "ano": "1900",
+        "quantidade": 5,
+        "disponiveis": 5
+    },
+    {
+        "titulo": "capitães de areia",
+        "autor": "jorge amado",
+        "editora": "companhia editora nacional",
+        "categoria": "Romance",
+        "ano": "1937",
+        "quantidade": 3,
+        "disponiveis": 3
+    },
+    {
+        "titulo": "vidas secas",
+        "autor": "graciliano ramos",
+        "editora": "jose olympio",
+        "categoria": "Romance",
+        "ano": "1938",
+        "quantidade": 8,
+        "disponiveis": 8
+    },
+    {
+        "titulo": "memorias postumas de bras cubas",
+        "autor": "machado de assis",
+        "editora": "tipografia nacional",
+        "categoria": "Romance",
+        "ano": "1881",
+        "quantidade": 5,
+        "disponiveis": 5
+    },
+    {
+        "titulo": "a culpa é das estrelas ",
+        "autor": "john green",
+        "editora": "dutton books",
+        "categoria": "Romance",
+        "ano": "2012",
+        "quantidade": 10,
+        "disponiveis": 10
+    },
+    {
+        "titulo": "percy jackson e o ladrao de raios",
+        "autor": "rick riordan",
+        "editora": "miramax books",
+        "categoria": "Ficção",
+        "ano": "2005",
+        "quantidade": 8,
+        "disponiveis": 8
+    },
+    {
+        "titulo": "cem ano de solidão",
+        "autor": "gabriel garcia marquez",
+        "editora": "editorial sudamericana",
+        "categoria": "Outros",
+        "ano": "1967",
+        "quantidade": 5,
+        "disponiveis": 5
+    },
+    {
+        "titulo": "a menina que roubava livros",
+        "autor": "markus zusak",
+        "editora": "picador",
+        "categoria": "Romance",
+        "ano": "2005",
+        "quantidade": 9,
+        "disponiveis": 9
+    },
+    {
+        "titulo": "o codigo da vinci",
+        "autor": "dan brown",
+        "editora": "doubleday",
+        "categoria": "Outros",
+        "ano": "2003",
+        "quantidade": 2,
+        "disponiveis": 2
+    },
+    {
+        "titulo": "a revolução dos bichos",
+        "autor": "george orwell",
+        "editora": "secker & warburg",
+        "categoria": "Ficção",
+        "ano": "1945",
+        "quantidade": 3,
+        "disponiveis": 3
+    },
+    {
+        "titulo": "veneno de farofa",
+        "autor": "loyvian",
+        "editora": "ifcm",
+        "categoria": "Biografia",
+        "ano": "2025",
+        "quantidade": 5,
+        "disponiveis": 5
     }
 ]

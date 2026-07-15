@@ -20,6 +20,6 @@ class Livro:
             self.disponiveis += 1
 
     def __str__(self):
-        return f"{self.titulo} - {self.autor}"
+        return f"{self.titulo} - {self.autor} - {self.editora} - {self.categoria} - {self.ano} - {self.quantidade}"
     
-        
+    

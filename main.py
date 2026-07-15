@@ -3,7 +3,7 @@ from aluno import Aluno
 from biblioteca import Biblioteca
 from interface import Interface
 
-Interface()
+teste = Interface()
 
 
 
