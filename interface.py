@@ -6,6 +6,7 @@ from biblioteca import Biblioteca
 from livro import Livro
 from aluno import Aluno
 
+
 class Interface:
     def __init__(self):
         self.janela = tk.Tk()
@@ -14,6 +15,7 @@ class Interface:
         self.biblioteca = Biblioteca()
         self.livro_selecionado = None
         self.aluno_selecionado = None
+        self.emprestimo_selecionado = None
 
         self.notebook = ttk.Notebook(self.janela)
         self.notebook.pack(fill="both", expand=True)
@@ -247,6 +249,8 @@ class Interface:
         colunas_emprestimo = (
             "Aluno",
             "Livro",
+            "Empréstimo",
+            "Devolução",
             "Status"
         )
 
@@ -279,8 +283,33 @@ class Interface:
             pady=20
         )
 
-        self.atualizar_combos_emprestimo()
+        self.tabela_emprestimos.bind(
+            "<<TreeviewSelect>>",
+            self.selecionar_emprestimo
+        )
 
+        ttk.Button(
+        self.aba_emprestimos,
+        text="Devolver Livro",
+        command=self.devolver_livro
+        ).grid(
+            row=5,
+            column=0,
+            padx=10,
+            pady=10,
+            sticky="w"
+        )
+
+        self.tabela_emprestimos.grid(
+            row=4,
+            column=0,
+            columnspan=2,
+            padx=10,
+            pady=20
+        )
+
+        self.atualizar_combos_emprestimo()
+        self.atualizar_tabela_emprestimos()
         
         self.janela.mainloop()
             #===============
@@ -360,6 +389,35 @@ class Interface:
             )
         
         print(f"Livro cadastrado: {livro}")
+
+    def devolver_livro(self):
+
+        if self.emprestimo_selecionado is None:
+            messagebox.showwarning(
+                "Aviso",
+                "Selecione um empréstimo."
+            )
+            return
+
+        if self.biblioteca.devolver_emprestimo(
+            self.emprestimo_selecionado
+        ):
+
+            messagebox.showinfo(
+                "Sucesso",
+                "Livro devolvido com sucesso!"
+            )
+
+            self.atualizar_tabela_livros()
+            self.atualizar_tabela_emprestimos()
+            self.atualizar_combos_emprestimo()
+
+        else:
+
+            messagebox.showwarning(
+                "Aviso",
+                "Este empréstimo já foi devolvido."
+            )
 
         
     def atualizar_tabela_livros(self):
@@ -751,8 +809,35 @@ class Interface:
             else:
                 messagebox.showerror(
                     "Erro",
-                    "Livro indisponível."
+                    "O livro está indisponível ou o aluno já realizou um empréstimo hoje."
                 )
+
+    def selecionar_emprestimo(self, event):
+
+        selecionado = self.tabela_emprestimos.selection()
+        if not selecionado:
+            return
+        
+        valores = self.tabela_emprestimos.item(
+            selecionado[0],
+            "values"
+        )
+
+        aluno_nome = valores[0]
+        livro_titulo = valores[1]
+
+        self.emprestimo_selecionado = None
+
+        for emprestimo in self.biblioteca.emprestimos:
+
+            if (
+                emprestimo.aluno.nome == aluno_nome
+                and
+                emprestimo.livro.titulo == livro_titulo
+            ):
+
+                self.emprestimo_selecionado = emprestimo
+                break
 
     def atualizar_tabela_emprestimos(self):
 
@@ -767,9 +852,12 @@ class Interface:
                 values=(
                     emprestimo.aluno.nome,
                     emprestimo.livro.titulo,
+                    emprestimo.data_emprestimo.strftime("%d/%m/%Y"),
+                    emprestimo.data_devolucao.strftime("%d/%m/%Y"),
                     emprestimo.status
                 )
             )
+<<<<<<< HEAD
 
     def pesquisar_aluno(self, event):
 
@@ -795,3 +883,36 @@ class Interface:
 
         self.combo_livros["values"] = filtrados
         
+=======
+    
+    def devolver_livro(self):
+
+        if self.emprestimo_selecionado is None:
+            messagebox.showwarning(
+                "Aviso",
+                "Selecione um empréstimo."
+            )
+            return
+
+        sucesso = self.biblioteca.devolver_emprestimo(
+            self.emprestimo_selecionado
+        )
+
+        if sucesso:
+
+            messagebox.showinfo(
+                "Sucesso",
+                "Livro devolvido com sucesso!"
+            )
+
+            self.atualizar_tabela_emprestimos()
+            self.atualizar_tabela_livros()
+            self.atualizar_combos_emprestimo()
+
+        else:
+
+            messagebox.showwarning(
+                "Aviso",
+                "Este empréstimo já foi devolvido."
+            )
+>>>>>>> 4f1744dbf3cfed2d026a93ef6d1b1cbc067ca1d2

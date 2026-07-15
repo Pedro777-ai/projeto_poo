@@ -1,17 +1,27 @@
 [
     {
         "nome": "pedro emanuel",
-        "matricula": "220251174010002",
+        "matricula": "20251174010002",
         "email": "pedro.emanuel1@escolar.ifrn.edu.br"
     },
     {
         "nome": "igor trindade",
-        "matricula": "20251174010067",
+        "matricula": "20251174010035",
         "email": "igor.trindade@escolar.ifrn.edu.br"
     },
     {
         "nome": "davi freire silva",
         "matricula": "20251174010001",
         "email": "davi.freire@escolar.ifrn.edu.br"
+    },
+    {
+        "nome": "ythale yasmim",
+        "matricula": "20251174010067",
+        "email": "ythale.paula@escolar.ifrn.edu.br"
+    },
+    {
+        "nome": "iasmim eliziane",
+        "matricula": "20251174010063",
+        "email": "m.iasmim@escolar.ifrn.edu.br"
     }
 ]
