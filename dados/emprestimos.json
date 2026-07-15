@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "aluno": "20251174010067",
+        "livro": "cem ano de solidão",
+        "status": "Ativo",
+        "data_emprestimo": "15/07/2026",
+        "data_devolucao": "05/08/2026"
+    }
+]

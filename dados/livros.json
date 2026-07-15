@@ -60,7 +60,7 @@
         "categoria": "Outros",
         "ano": "1967",
         "quantidade": 5,
-        "disponiveis": 5
+        "disponiveis": 4
     },
     {
         "titulo": "a menina que roubava livros",
@@ -97,5 +97,14 @@
         "ano": "2025",
         "quantidade": 5,
         "disponiveis": 5
+    },
+    {
+        "titulo": "harry potter",
+        "autor": "JK rolling",
+        "editora": "cu",
+        "categoria": "Ficção",
+        "ano": "6767",
+        "quantidade": 6,
+        "disponiveis": 6
     }
 ]
