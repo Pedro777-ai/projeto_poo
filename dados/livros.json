@@ -6,11 +6,7 @@
         "categoria": "Romance",
         "ano": "1900",
         "quantidade": 5,
-<<<<<<< HEAD
-        "disponiveis": 3
-=======
         "disponiveis": 5
->>>>>>> 4f1744dbf3cfed2d026a93ef6d1b1cbc067ca1d2
     },
     {
         "titulo": "capitães de areia",
@@ -92,5 +88,14 @@
         "ano": "1945",
         "quantidade": 3,
         "disponiveis": 3
+    },
+    {
+        "titulo": "veneno de farofa",
+        "autor": "loyvian",
+        "editora": "ifcm",
+        "categoria": "Biografia",
+        "ano": "2025",
+        "quantidade": 5,
+        "disponiveis": 5
     }
 ]

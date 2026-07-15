@@ -225,7 +225,7 @@ class Interface:
 
         self.combo_livros.bind(
             "<KeyRelease>",
-            self.pesquisar_livro
+            self.pesquisar_livro_combo
         )
 
         self.combo_livros.grid(
@@ -569,6 +569,7 @@ class Interface:
                         livro.disponiveis
                     )
                 )
+        
             #================
             #      ALUNO
             #================
@@ -857,7 +858,7 @@ class Interface:
                     emprestimo.status
                 )
             )
-<<<<<<< HEAD
+
 
     def pesquisar_aluno(self, event):
 
@@ -871,7 +872,7 @@ class Interface:
 
         self.combo_alunos["values"] = filtrados
 
-    def pesquisar_livro(self, event):
+    def pesquisar_livro_combo(self, event):
 
         texto = self.combo_livros.get().lower()
 
@@ -883,7 +884,7 @@ class Interface:
 
         self.combo_livros["values"] = filtrados
         
-=======
+
     
     def devolver_livro(self):
 
@@ -915,4 +916,4 @@ class Interface:
                 "Aviso",
                 "Este empréstimo já foi devolvido."
             )
->>>>>>> 4f1744dbf3cfed2d026a93ef6d1b1cbc067ca1d2
+
