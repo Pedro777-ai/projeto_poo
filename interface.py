@@ -193,7 +193,12 @@ class Interface:
         self.combo_alunos = ttk.Combobox(
             self.aba_emprestimos,
             width=40,
-            state="readonly"
+            state="normal"
+        )
+
+        self.combo_alunos.bind(
+            "<KeyRelease>",
+            self.pesquisar_aluno
         )
 
         self.combo_alunos.grid(
@@ -213,7 +218,12 @@ class Interface:
         self.combo_livros = ttk.Combobox(
             self.aba_emprestimos,
             width=40,
-            state="readonly"
+            state="normal"
+        )
+
+        self.combo_livros.bind(
+            "<KeyRelease>",
+            self.pesquisar_livro
         )
 
         self.combo_livros.grid(
@@ -676,20 +686,20 @@ class Interface:
         #================
 
     def atualizar_combos_emprestimo(self):
-        alunos = []
 
-        for aluno in self.biblioteca.alunos:
-            alunos.append(
-                aluno.nome
-            )
-        livros = []
-        for livro in self.biblioteca.livros:
-            if livro.disponiveis > 0:
-                livros.append(
-                    livro.titulo
-                )
-        self.combo_alunos["values"] = alunos
-        self.combo_livros["values"] = livros
+        self.lista_alunos = [
+            aluno.nome
+            for aluno in self.biblioteca.alunos
+        ]
+
+        self.lista_livros = [
+            livro.titulo
+            for livro in self.biblioteca.livros
+            if livro.disponiveis > 0
+        ]
+
+        self.combo_alunos["values"] = self.lista_alunos
+        self.combo_livros["values"] = self.lista_livros
 
     def realizar_emprestimo(self):
         aluno_nome = self.combo_alunos.get()
@@ -760,4 +770,28 @@ class Interface:
                     emprestimo.status
                 )
             )
+
+    def pesquisar_aluno(self, event):
+
+        texto = self.combo_alunos.get().lower()
+
+        filtrados = [
+            aluno
+            for aluno in self.lista_alunos
+            if texto in aluno.lower()
+        ]
+
+        self.combo_alunos["values"] = filtrados
+
+    def pesquisar_livro(self, event):
+
+        texto = self.combo_livros.get().lower()
+
+        filtrados = [
+            livro
+            for livro in self.lista_livros
+            if texto in livro.lower()
+        ]
+
+        self.combo_livros["values"] = filtrados
         
